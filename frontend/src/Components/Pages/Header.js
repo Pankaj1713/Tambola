@@ -1,34 +1,10 @@
-// import React from 'react';
-// import Container from 'react-bootstrap/Container';
-// import Nav from 'react-bootstrap/Nav';
-// import "./header.css";
-// import Navbar from 'react-bootstrap/Navbar';
-// import {NavLink} from "react-router-dom";
-
-// const Headers = () => {
-//   return (
-//     <>
-//       <Navbar bg="dark" variant="dark">
-//         <Container>
-//           <NavLink to="/" className=" text-light text-decoration-none">HpCloud</NavLink>
-//           <Nav className="">
-//             <NavLink to="/register" className="mt-3 mx-2 text-light text-decoration-none">Register</NavLink>
-//             <img src="/logo192.png" style={{width:50}} alt="" />
-//           </Nav>
-//         </Container>
-//       </Navbar>
-//     </>
-//   )
-// }
-
-// export default Headers
 import React, { useContext } from 'react'
 import Avatar from '@mui/material/Avatar';
 import "./header.css"
 import { LoginContext } from './ContextProvider/Context';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useNavigate , NavLink } from "react-router-dom"
+import { useNavigate, NavLink } from "react-router-dom"
 
 const Header = () => {
 
@@ -84,8 +60,8 @@ const Header = () => {
         <>
             <header>
                 <nav>
-                    
-                <NavLink to="/"><h1> Home </h1></NavLink>
+
+                    <NavLink to="/"><h1> Home </h1></NavLink>
                     <div className="avtar">
                         {
                             logindata ? <Avatar style={{ background: "salmon", fontWeight: "bold", textTransform: "capitalize" }} onClick={handleClick}>{logindata.ValidUserOne.fname[0].toUpperCase()}</Avatar> :

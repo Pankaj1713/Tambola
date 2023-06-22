@@ -1,5 +1,6 @@
 import Header from "./Components/Pages/Header";
 import Login from "./Components/Pages/Login";
+import Plans from "./Components/Pages/Plans";
 import Register from "./Components/Pages/Register";
 import Dashboard from "./Components/Pages/Dashboard";
 import Error from "./Components/Pages/Error";
@@ -60,6 +61,7 @@ function App() {
 
             <Routes>
               <Route path="/" element={<Login />} />
+              <Route path="/plans" element={< Plans/>} />
               <Route path="/register" element={<Register />} />
               <Route path="/dash" element={<Dashboard />} />
               <Route path="/password-reset" element={<PasswordReset />} />

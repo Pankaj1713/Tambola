@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./mix.css"
+import axios from 'axios';
 
 const Register = () => {
 
@@ -30,66 +31,59 @@ const Register = () => {
     };
 
     const addUserdata = async (e) => {
-        e.preventDefault();
+        try {
+            e.preventDefault();
 
-        const { fname, email, password, cpassword } = inpval;
+            const { fname, email, password, cpassword } = inpval;
 
-        if (fname === "") {
-            toast.warning("fname is required!", {
-                position: "top-center"
-            });
-        } else if (email === "") {
-            toast.error("email is required!", {
-                position: "top-center"
-            });
-        } else if (!email.includes("@")) {
-            toast.warning("includes @ in your email!", {
-                position: "top-center"
-            });
-        } else if (password === "") {
-            toast.error("password is required!", {
-                position: "top-center"
-            });
-        } else if (password.length < 6) {
-            toast.error("password must be 6 char!", {
-                position: "top-center"
-            });
-        } else if (cpassword === "") {
-            toast.error("cpassword is required!", {
-                position: "top-center"
-            });
-        }
-        else if (cpassword.length < 6) {
-            toast.error("confirm password must be 6 char!", {
-                position: "top-center"
-            });
-        } else if (password !== cpassword) {
-            toast.error("pass and Cpass are not matching!", {
-                position: "top-center"
-            });
-        } else {
-            // console.log("user registration succesfully done");
-
-
-            const data = await fetch("/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    fname, email, password, cpassword
-                })
-            });
-
-            const res = await data.json();
-            // console.log(res.status);
-
-            if (res.status === 201) {
-                toast.success("Registration Successfully done 😃!", {
+            if (fname === "") {
+                toast.warning("first name is required!", {
                     position: "top-center"
                 });
-                setInpval({ ...inpval, fname: "", email: "", password: "", cpassword: "" });
+            } else if (email === "") {
+                toast.error("email is required!", {
+                    position: "top-center"
+                });
+            } else if (!email.includes("@")) {
+                toast.warning("includes @ in your email!", {
+                    position: "top-center"
+                });
+            } else if (password === "") {
+                toast.error("password is required!", {
+                    position: "top-center"
+                });
+            } else if (password.length < 6) {
+                toast.error("password must be 6 char!", {
+                    position: "top-center"
+                });
+            } else if (cpassword === "") {
+                toast.error("confirm password is required!", {
+                    position: "top-center"
+                });
             }
+            else if (cpassword.length < 6) {
+                toast.error("confirm password must be 6 char!", {
+                    position: "top-center"
+                });
+            } else if (password !== cpassword) {
+                toast.error("pass and Cpass are not matching!", {
+                    position: "top-center"
+                });
+            } else {
+                // console.log("user registration succesfully done");
+
+
+                const res = axios.post('/register', { fname, email, password, cpassword })
+
+                if (res.status === 201) {
+                    toast.success("Registration Successfully done 😃!", {
+                        position: "top-center"
+                    });
+                    setInpval({ ...inpval, fname: "", email: "", password: "", cpassword: "" });
+                }
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 

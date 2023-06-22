@@ -13,6 +13,10 @@ header nav{
     align-items: center;
 }
 
+header nav a{
+    text-decoration: none;
+}
+
 header nav h1{
     color:#2d3748;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink ,useNavigate} from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import "./mix.css"
 
@@ -12,8 +12,7 @@ const Login = () => {
         password: "",
     });
 
-    const history = useNavigate();
-
+    const navigate = useNavigate()
     const setVal = (e) => {
         // console.log(e.target.value);
         const { name, value } = e.target;
@@ -27,53 +26,57 @@ const Login = () => {
     };
 
 
-    const loginuser = async(e) => {
-        e.preventDefault();
+    const loginuser = async (e) => {
+        try {
 
-        const { email, password } = inpval;
+            e.preventDefault()
+            const { email, password } = inpval;
 
-        if (email === "") {
-            toast.error("email is required!", {
-                position: "top-center"
-            });
-        } else if (!email.includes("@")) {
-            toast.warning("includes @ in your email!", {
-                position: "top-center"
-            });
-        } else if (password === "") {
-            toast.error("password is required!", {
-                position: "top-center"
-            });
-        } else if (password.length < 6) {
-            toast.error("password must be 6 char!", {
-                position: "top-center"
-            });
-        } else {
-            // console.log("user login succesfully done");
-
-
-            const data = await fetch("/login",{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                     email, password
-                })
-            });
-
-            const res = await data.json();
-            //  console.log(res);
-
-            if(res.status === 201){
-                localStorage.setItem("usersdatatoken",res.result.token);
-                history("/dash")
-                setInpval({...inpval,email:"",password:""});
-            }else{
-                toast.error("Invalid Credentials", {
+            if (email === "") {
+                toast.error("email is required!", {
                     position: "top-center"
                 });
+            } else if (!email.includes("@")) {
+                toast.warning("includes @ in your email!", {
+                    position: "top-center"
+                });
+            } else if (password === "") {
+                toast.error("password is required!", {
+                    position: "top-center"
+                });
+            } else if (password.length < 6) {
+                toast.error("password must be 6 char!", {
+                    position: "top-center"
+                });
+            } else {
+                // console.log("user login succesfully done");
+
+
+                const data = await fetch("/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email, password
+                    })
+                });
+
+                const res = await data.json();
+                //  console.log(res);
+
+                if (res.status === 201) {
+                    localStorage.setItem("usersdatatoken", res.result.token);
+                    setInpval({ ...inpval, email: "", password: "" });
+                    navigate("/plans");
+                } else {
+                    toast.error("Invalid Credentials", {
+                        position: "top-center"
+                    });
+                }
             }
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -101,9 +104,11 @@ const Login = () => {
                             </div>
                         </div>
 
-                        <button className='btn' onClick={loginuser}>Login</button>
+                        <button className='btn' onClick={loginuser}>Login<NavLink to="/Plans"></NavLink></button>
+
+
                         <p>Don't have an Account? <NavLink to="/register">Sign Up</NavLink> </p>
-                        <p style={{color:"black",fontWeight:"bold"}}>Forgot Password  <NavLink to="/password-reset">Click Here</NavLink> </p>
+                        <p style={{ color: "black", fontWeight: "bold" }}>Forgot Password  <NavLink to="/password-reset">Click Here</NavLink> </p>
                     </form>
                     <ToastContainer />
                 </div>

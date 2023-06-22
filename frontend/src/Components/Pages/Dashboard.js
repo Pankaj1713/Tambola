@@ -45,7 +45,7 @@ const Dashboard = () => {
     }, [])
 
     return (
-        <>
+        <div>
             {
                 data ? <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <img src="./man.png" style={{ width: "200px", marginTop: 20 }} alt="" />
@@ -56,7 +56,7 @@ const Dashboard = () => {
                 </Box>
             }
 
-        </>
+        </div>
 
     )
 }
